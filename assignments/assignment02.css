@@ -21,3 +21,8 @@ span{
  border: 5px solid blue;
  background-color: yellow; 
 }
+nav {
+ padding: 5px;
+  background-color:rgba(0,255,0,0.9);
+  font-size: 20px;
+}
