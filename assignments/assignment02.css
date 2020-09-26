@@ -22,7 +22,7 @@ span{
  background-color: yellow; 
 }
 nav {
-  position: sticky;
+  position: fixed;
  padding: 5px;
   background-color:rgba(0,255,0,0.9);
   font-size: 20px;
