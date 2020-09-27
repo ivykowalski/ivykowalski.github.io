@@ -28,9 +28,6 @@ nav {
   font-size: 20px;
    top: 0;
 }
-input:focus{
- background-color: pink; 
-}
 span.a{
 }
 span.b{
@@ -50,4 +47,23 @@ img[alt="dog icon"]{
   position:relative;
   left: -50px;
   top: -150px;
+}
+.stripey tr:nth-child(even) {
+  background-color: gray;
+}
+.stripey tr:nth-child(odd) {
+  background-color: white;
+}
+.stripey th {
+  color: white;
+  background-color: black;
+}
+.mousey td:hover {
+  background-color: yellow;
+}
+.rightey td {
+  text-align: right;
+}
+input[type="text"].pinkey:focus {
+  background-color: pink;
 }
