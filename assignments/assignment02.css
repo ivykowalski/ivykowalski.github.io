@@ -31,19 +31,22 @@ input:focus{
  background-color: pink; 
 }
 span.a{
-  word-wrap: break-word;
 }
 span.b{
- position: absolute; 
+ position: relative;
+  display: block;
+}
+span.c{
+ height: auto; 
 }
 img[alt=”cat icon”]{
-  position: absolute;
-right: -10px;
+  position: fixed;;
+right: 0;
     bottom: 0;
   z-index: 100;
 }
 img[alt=”dog icon”]{
   position:relative;
-  left: 50px;
-  bottom: 150px;
+  left: -50px;
+  top: -150px;
 }
