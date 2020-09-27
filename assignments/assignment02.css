@@ -36,3 +36,11 @@ span.a{
 span.b{
  position: absolute; 
 }
+img[alt=”cat icon”]{
+  
+}
+img[alt=”dog icon”]{
+  position:relative;
+  left: 50px;
+  bottom: 150px;
+}
