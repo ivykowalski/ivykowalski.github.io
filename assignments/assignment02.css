@@ -35,6 +35,7 @@ span.b{
   display: block;
 }
 span.c{
+  position: relative;
  display: inline-block; 
 }
 img[alt="cat icon"]{
