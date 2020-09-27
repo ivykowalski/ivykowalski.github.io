@@ -35,7 +35,7 @@ span.b{
   display: block;
 }
 span.c{
- height: 100px; 
+ display: inline-block; 
 }
 img[alt="cat icon"]{
   position: fixed;
