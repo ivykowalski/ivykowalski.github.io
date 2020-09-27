@@ -37,7 +37,8 @@ span.b{
  position: absolute; 
 }
 img[alt=”cat icon”]{
-  
+  position: relative;
+  z-index: 100;
 }
 img[alt=”dog icon”]{
   position:relative;
