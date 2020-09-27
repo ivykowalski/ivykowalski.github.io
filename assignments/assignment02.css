@@ -31,3 +31,9 @@ nav {
 input:focus{
  background-color: pink; 
 }
+span.a{
+  word-wrap: break-word;
+}
+span.b{
+ position: absolute; 
+}
