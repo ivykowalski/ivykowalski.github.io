@@ -84,6 +84,6 @@ nav {
   text-align: right;
 }
 /* Step 13 Part D */
-input[type="text"].pinkey:focus{
+input.pinkey:focus{
   background-color: pink;
 }
