@@ -112,11 +112,11 @@ th {
 	background-color: black;
 }
 
-.mousey td:hover {
+td:hover {
 	background-color: yellow;
 }
 
-.rightey td {
+td {
 	text-align: right;
 }
 
