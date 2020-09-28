@@ -99,16 +99,15 @@ nav {
 
 
 /* Step 12 Part D */
-
-.stripey tr:nth-child(even) {
+tr:nth-child(even) {
 	background-color: gray;
 }
 
-.stripey tr:nth-child(odd) {
+tr:nth-child(odd) {
 	background-color: white;
 }
 
-.stripey th {
+th {
 	color: white;
 	background-color: black;
 }
