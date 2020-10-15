@@ -258,7 +258,7 @@ elem[19] = document.getElementById("totals");
 //par total remains constant
 const parTotal = 72;
 let scoreTotal = 0;
-let overTotal = 0;//sets the par total in the scorecard to parTotal 
+let overTotal = 0; //sets the par total in the scorecard to parTotal 
 elem[19].children[1].innerHTML = parTotal;
 
 
@@ -267,15 +267,14 @@ function add1(elem, elemTotal) {
 	if (elem.children[2].innerHTML == "-" || elem.children[2].innerHTML == "0") { //checks if the hole's value is "-" or "0"
 		elem.children[2].innerHTML = "1"; //if it is the score for the hole on the scorecard is set to 1
 		scoreTotal = scoreTotal + 1; //updates the total score
-		elemTotal.children[2].innerHTML = scoreTotal;//updates the scorecard 
-	} 
-	else {
+		elemTotal.children[2].innerHTML = scoreTotal; //updates the scorecard 
+	} else {
 		let score = elem.children[2].innerHTML; //declares a local variable "score" to hold the number value of the score column for that hole
 		score = Number.parseInt(score);
 		elem.children[2].innerHTML = score + 1; //updates the scorecard value for the hole to be the score +1
 		scoreTotal = scoreTotal + 1; //updates the total score
-		elemTotal.children[2].innerHTML = scoreTotal;//updates the scorecard
-	} 
+		elemTotal.children[2].innerHTML = scoreTotal; //updates the scorecard
+	}
 	//the next if statement keeps track of how much the score has gotten over par
 	let over = elem.children[2].innerHTML; //declares a local variable "over" to hold the number value of the score column for that hole
 	over = Number.parseInt(over);
@@ -283,8 +282,8 @@ function add1(elem, elemTotal) {
 		overTotal = overTotal + 1; //adds one to the over total if the score is over par 
 		over = over - 4; //subtract the difference between the score and par
 		elem.children[3].innerHTML = over; //updates the scorecard over value for that hole 
-		elemTotal.children[3].innerHTML = overTotal;//updates the scorecard
-	} 
+		elemTotal.children[3].innerHTML = overTotal; //updates the scorecard
+	}
 }
 //the sub function subtracts one from the score and updates the over value as well as the totals accordingly 
 function sub1(elem, elemTotal) {
@@ -324,3 +323,4 @@ function clear(elem, elemTotal) {
 	elem.children[2].innerHTML = "-";
 	elem.children[3].innerHTML = "-";
 }
+//Code validator had a problem with the 'lets' and 'constants', but I kept them in because I needed them
