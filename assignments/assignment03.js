@@ -255,38 +255,36 @@ elem[18].children[4].children[2].onclick = function() {
 
 elem[19] = document.getElementById("totals");
 //declares variables used by the 19 id/19th row which is the "totals" row
-//The par total remains constant but the totals for the score and the amount over par can change
+//par total remains constant
 const parTotal = 72;
 let scoreTotal = 0;
-let overTotal = 0;
-//sets the par total in the scorecard to parTotal which is 72 
+let overTotal = 0;//sets the par total in the scorecard to parTotal 
 elem[19].children[1].innerHTML = parTotal;
 
 
-// create an "add1" function
-// takes in the current hole/row and the total to be updated
+// create an "add1" function that takes in the current hole/row and the total and updates
 function add1(elem, elemTotal) {
 	if (elem.children[2].innerHTML == "-" || elem.children[2].innerHTML == "0") { //checks if the hole's value is "-" or "0"
-		elem.children[2].innerHTML = "1"; //if so, the score for the hole on the scorecard is set to 1
-		scoreTotal = scoreTotal + 1; //updates the total score using the scoreTotal variable declared above 
-		elemTotal.children[2].innerHTML = scoreTotal;
-	} //updates the total on the scorecard 
+		elem.children[2].innerHTML = "1"; //if it is the score for the hole on the scorecard is set to 1
+		scoreTotal = scoreTotal + 1; //updates the total score
+		elemTotal.children[2].innerHTML = scoreTotal;//updates the scorecard 
+	} 
 	else {
 		let score = elem.children[2].innerHTML; //declares a local variable "score" to hold the number value of the score column for that hole
 		score = Number.parseInt(score);
-		elem.children[2].innerHTML = score + 1; //updates the scorecard value for the hole to be the score +1 (it's plus 1 since the add button was pressed)
-		scoreTotal = scoreTotal + 1; //updates the total score using the scoreTotal variable declared above
-		elemTotal.children[2].innerHTML = scoreTotal;
-	} //updates the total on the scorecard
-	//the next if statement accounts for the over column which keeps track of how much the score has gotten over par
-	let over = elem.children[2].innerHTML; //declares a local variable "over" to hold the number value of the score column for that hole (this will be used/changed later)
+		elem.children[2].innerHTML = score + 1; //updates the scorecard value for the hole to be the score +1
+		scoreTotal = scoreTotal + 1; //updates the total score
+		elemTotal.children[2].innerHTML = scoreTotal;//updates the scorecard
+	} 
+	//the next if statement keeps track of how much the score has gotten over par
+	let over = elem.children[2].innerHTML; //declares a local variable "over" to hold the number value of the score column for that hole
 	over = Number.parseInt(over);
-	if (over > 4) { //using the int variable over (which is the current score value of the hole), checks if the score is over par (4) 
+	if (over > 4) { //checks if the score is over par 
 		overTotal = overTotal + 1; //adds one to the over total if the score is over par 
-		over = over - 4; //subtract 4 (the over amount is the difference between the score and par so you subtract par which is 4)
+		over = over - 4; //subtract the difference between the score and par
 		elem.children[3].innerHTML = over; //updates the scorecard over value for that hole 
-		elemTotal.children[3].innerHTML = overTotal;
-	} //updates the over total on the scorecard
+		elemTotal.children[3].innerHTML = overTotal;//updates the scorecard
+	} 
 }
 //the sub function subtracts one from the score and updates the over value as well as the totals accordingly 
 function sub1(elem, elemTotal) {
@@ -307,22 +305,22 @@ function sub1(elem, elemTotal) {
 		elemTotal.children[3].innerHTML = overTotal; //updates the over total on the scorecard
 	}
 }
-//the clear functions clears a row/hole and updates the totals accordingly 
+//the clear function clears a row/hole and updates the totals 
 function clear(elem, elemTotal) {
-	let score = elem.children[2].innerHTML; //declares a local variable "score" to hold the number value of the score column for that hole
-	let over = elem.children[3].innerHTML; //declares a local variable "over" to hold the number value of the over column for that hole
-	if (score != "-") { //checks if the score isn't equal to "-" i.e if the score has a number value 
+	let score = elem.children[2].innerHTML; //declares a local variable "score" to hold the number value of the score
+	let over = elem.children[3].innerHTML; //declares a local variable "over" to hold the number value of the over
+	if (score != "-") { //checks if the score isn't equal to "-" 
 		score = Number.parseInt(score);
-		elemTotal.children[2].innerHTML = scoreTotal - score; //subtracts the score you're clearing from the total on the scorecard
-		scoreTotal = scoreTotal - score; //subtracts the score you're clearing from the scoreTotal variable which is holding the total 
+		elemTotal.children[2].innerHTML = scoreTotal - score; //subtracts the score
+		scoreTotal = scoreTotal - score; //subtracts it from the scoreTotal too
 	}
 	//clears the over values 
-	if (over != "-") { //checks if the score isn't equal to "-" i.e if the score has a number value 
+	if (over != "-") { //checks if the score isn't equal to "-" 
 		over = Number.parseInt(over);
-		elemTotal.children[3].innerHTML = overTotal - over; //subtracts the oover score you're clearing from the over total on the scorecard
-		overTotal = overTotal - over; //subtracts the over total you're clearing from the overTotal variable which is holding the total over amount
+		elemTotal.children[3].innerHTML = overTotal - over; //subtracts the score 
+		overTotal = overTotal - over; //subtracts it from the overTotal too
 	}
-	//lastly updates the score and over columns for the hole and resets them to "-"
+	//updates the score and over columns for the hole and resets them to "-"
 	elem.children[2].innerHTML = "-";
 	elem.children[3].innerHTML = "-";
 }
