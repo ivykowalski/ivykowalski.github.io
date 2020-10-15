@@ -295,11 +295,11 @@ function sub1(elem, elemTotal) {
 		elemTotal.children[2].innerHTML = scoreTotal; //the current scoreTotal is applied to the scorecard in the totals row 
 	}
 	//updates the over values 
-	let over = elem.children[2].innerHTML; //declares a local variable "over" to hold the number value of the score column for that hole (this will be used/changed later)
+	let over = elem.children[2].innerHTML; //declares a local variable "over" to hold the number value of the score column for that hole
 	over = Number.parseInt(over);
-	if (over >= 4) { //over represents the score currently so this checks if the score is over par (4)
+	if (over >= 4) { //checks if the score is over par
 		overTotal = overTotal - 1; //subtracts one from the over total 
-		over = over - 4; //subtract 4 (the over amount is the difference between the score and par so you subtract par which is 4)
+		over = over - 4; //subtract the difference between the score and par
 		elem.children[3].innerHTML = over; //updates the scorecard over value for that hole 
 		elemTotal.children[3].innerHTML = overTotal; //updates the over total on the scorecard
 	}
