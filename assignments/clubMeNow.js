@@ -125,7 +125,7 @@ function resetAllClubDistances() {
 // navigate to "About" screen
 function displayAbout() {
 	// your code here
-	//Creates an alert when the about button is clicked to display the current version of ClubMeNow to the use
+	//Creates an alert
 	alert('ClubMeNow version 1.0.0')
 }
 
