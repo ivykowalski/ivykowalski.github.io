@@ -56,7 +56,7 @@
         // your code here
 		//gives newClubName the value in the input box
 		newClubName = document.getElementById("clubName").value;
-		//checks if the input box isn't empty then adds a club if there is room
+		//checks if the input box has something in it
 		if(newClubName.length > 0){
 			clubs[clubs.length]= [clubs[clubs.length-1][0]+1, " ", newClubName, 0, 0, 0, 0, 15, 150, 150];
 			let newClub =JSON.stringify(clubs)
