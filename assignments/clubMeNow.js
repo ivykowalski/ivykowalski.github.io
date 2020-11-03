@@ -88,8 +88,11 @@ function displayClubDistanceEntryForm(c) {
 // replace the current "clubs" array with the previous one
 function undoLastShot() {
         // your code here !
+	//pulls clubs undo array from local storage 
 	var str = localStorage.getItem("clubsUndo");
+	//sets current clubs array back to previous
 	localStorage.setItem("clubs", str);
+	//refreshes page
 	window.location.href = "clubDistanceList.html";
 }
 
