@@ -86,7 +86,11 @@ function loadContent() {
             "Slug": c.Slug, 
             "NewConfirmed": c.NewConfirmed, 
             "NewDeaths": c.NewDeaths,
-            "Populations" : populations[c.Slug]
+            //STEP 2 Create array of objects containing slug, totalconfirmed, totaldeaths, populations, and totalconfirmed
+	    "TotalConfirmed": c.TotalConfirmed,
+            "TotalDeaths":c.TotalDeaths,
+            "Populations":populations[c.slug],
+            "TotalConfirmedPer100000":100000*c.TotalConfirmed/populations[c.Slug]
           });
         }
       }
