@@ -1,16 +1,8 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-12 col-md-9">
-      <canvas id="myChart"></canvas>
-    </div>
-    <div class="col-12 col-md-3">
-      <h3>Covid-19 </h3>
-      <p>"The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2), first identified in December 2019 in Wuhan, China." (<a href="https://en.wikipedia.org/wiki/COVID-19_pandemic">Wikipedia</a>)</p>
-    </div>
-  </div>
-</div>
+<h2>Example Chart using Chart.js</h2>
+<canvas id="myChart"></canvas>
 
-
+<h2>Example AJAX call to Covid19api</h2>
+<button type="button" onclick="loadContent()">Load Covid-19 Content</button>
 
 
 <!-- ChartJS: https://www.chartjs.org/ -->
@@ -21,22 +13,13 @@
 
 <!-- Day.js: https://day.js.org/docs/en/installation/browser -->
 <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
-<script>dayjs().format()</script>
 <script>
-  // ---------- Global variables ----------
+  dayjs().format();
+  console.log(dayjs().format("YYYY-MM-DD"));
+<script>
+	// ---------- Global variables ----------
 
 // use "var" keyword so code works in CodePen
-// var populations = {}; // see end of code for populations
-
-// get today's date (use Day.js instead)
-var today = new Date();
-var months = ["January", "February", "March", 
-              "April", "May", "June", 
-              "July", "August", "September", 
-              "October", "November", "December"];
-var todaysDate = months[today.getMonth()] 
-  + " " + today.getDate() 
-  + ", " + today.getFullYear();
 
 // Covid19api variables
 var URL = "https://api.covid19api.com/summary";
@@ -66,11 +49,6 @@ var chartData = {
       label: 'oranges',
       data: [2, 29, 5, 5, 2, 3, 10],
       backgroundColor: "rgba(255,140,0,0.4)"
-    },
-       {
-      label: 'bananas',
-      data: [2, 29, 5, 5, 2, 3, 10],
-      backgroundColor: "rgba(255,255,0,0.4)"
     }]
   },
   options: {
@@ -84,11 +62,7 @@ var chartData = {
           // logarithmic scale ignores maxTicksLimit
           maxTicksLimit: 11,
           callback: function(label, index, labels) {
-            return (   label/1000 > 999999 
-                    || label/1000 == 10000 
-                    || label/1000 == 1000 
-                    || label/1000 == 100 
-                    || label/1000 == 10 
+            return (   label/1000 > 9 
                     || label/1000 == 1 
                     || label/1000 == 0.1 
                     || label/1000 == 0.01) 
@@ -105,7 +79,7 @@ var chartData = {
     }
   }
 };
-// var myChart = new Chart(ctx, chartData); // shows "Apples/Oranges"
+// var myChart = new Chart(ctx, chartData); 
 
 // ---------- loadContent() function ----------
 
@@ -116,102 +90,56 @@ var chartData = {
 // https://www.w3schools.com/js/js_ajax_intro.asp
 
 function loadContent() {
-  // use Day.js diff() instead
-  let today = new Date();
-  let yesterday = today.valueOf() 
-    - (1000 * 60 * 60 * 24);
-  if( !localStorage.getItem("date")
-    || localStorage.getItem("date") < yesterday ) {
-    
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 
         && this.status == 200) {
-
-        covidJson = this.responseText;
-        covidJsObj = JSON.parse(covidJson);
-
-        localStorage.setItem("date", today.valueOf());
-        localStorage.setItem("json", covidJson);
-        
-        buildChart();
-        
-        console.log('ajax call');
-
-      } // end if (this.readyState == 4 ...
-    
-    }; // end xhttp.onreadystatechange = function()
-  
-    xhttp.open("GET", URL, true);
-    xhttp.send();
-    
-  } // end if( !localStorage.getItem("date")
-  else {
-    covidJson = localStorage.getItem("json");
-    covidJsObj = JSON.parse(covidJson);
-    buildChart();
-    console.log('no ajax call');
-  }
-  
-} // end function loadContent() 
-
-function buildChart() {
-  
-  newConfirmedOver1000 = [];
+      
+      covidJson = this.responseText;
+      covidJsObj = JSON.parse(covidJson);
+      newConfirmedOver1000 = [];
       
 	    for (let c of covidJsObj.Countries) {
-        if (c.TotalDeaths > 50000) {
+        if (c.NewConfirmed > 10000) {
           newConfirmedOver1000.push({ 
             "Slug": c.Slug, 
             "NewConfirmed": c.NewConfirmed, 
-            "NewDeaths": c.NewDeaths, 
-            "TotalConfirmed": c.TotalConfirmed, 
-            "TotalDeaths": c.TotalDeaths,
-            "Population":populations[c.Slug],
-            "TotalConfirmedPer100000": 
-                100000 * c.TotalConfirmed 
-                    / populations[c.Slug],
+            "NewDeaths": c.NewDeaths,
+            "Populations" : populations[c.Slug]
           });
         }
       }
-      
-      // STEP 3--- use lodash to sort array 
-      newConfirmedOver1000 = 
-        _.orderBy(newConfirmedOver1000, 
-                  'TotalConfirmedPer100000', 'desc');
+      newConfirmedOver1000 = _.orderBy(newConfirmedOver1000, "NewDeaths", "desc");
 
       chartData.data.datasets[0].backgroundColor 
         = "rgba(100,100,100,0.4)"; // gray
       chartData.data.datasets[1].backgroundColor 
         = "rgba(255,0,0,0.4)"; // red
-      chartData.data.datasets[2].backgroundColor 
-        = "rgba(0,0,255,0.4)"; // yellow
-      
       chartData.data.datasets[0].label  
-        = 'total cases';
+        = 'new cases';
       chartData.data.datasets[1].label  
-        = 'total deaths';
-      chartData.data.datasets[2].label  
-        = 'total cases per 100000';
-      
-      chartData.data.datasets[0].data  
-        = newConfirmedOver1000.map( 
-          (x) => x.TotalConfirmed );
-      chartData.data.datasets[1].data  
-        = newConfirmedOver1000.map( 
-          (x) => x.TotalDeaths );
-      chartData.data.datasets[2].data  
-        = newConfirmedOver1000.map( 
-          (x) => x.TotalConfirmedPer100000 );
-      
+        = 'new deaths';
       chartData.data.labels  
         = newConfirmedOver1000.map( (x) => x.Slug );
+      chartData.data.datasets[0].data  
+        = newConfirmedOver1000.map( 
+          (x) => x.NewConfirmed );
+      chartData.data.datasets[1].data  
+        = newConfirmedOver1000.map( 
+          (x) => x.NewDeaths );
       chartData.options.title.text 
-        = "Covid 19 Hotspots as of " + todaysDate;
-      
+        = "Covid 19 Hotspots (" + 
+        dayjs().format("YYYY-MM-DD") + ")" ;
       myChart = new Chart(ctx, chartData); 
+
+    } // end if
+    
+  }; // end xhttp.onreadystatechange = function()
   
-} // end function buildChart()
+  xhttp.open("GET", URL, true);
+  xhttp.send();
+  
+} // end function loadContent() 
 
 // data from: https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population
 var populations = {
@@ -316,6 +244,5 @@ var populations = {
 'austria' : 8915382,
 'switzerland' : 8632703,
 }
-
-loadContent();
+</script>
 </script>
