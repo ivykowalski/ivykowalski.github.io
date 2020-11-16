@@ -30,7 +30,7 @@ var chartData = {
       label: 'oranges',
       data: [2, 29, 5, 5, 2, 3, 10],
       backgroundColor: "rgba(255,140,0,0.4)"
-    }, {\
+    }, {
 //STEP 4 -- Adding third blue bar for totalConfirmedPer100000
       label: 'bananas',
       data: [2, 29, 5, 5, 2, 3, 10],
