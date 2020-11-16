@@ -30,6 +30,11 @@ var chartData = {
       label: 'oranges',
       data: [2, 29, 5, 5, 2, 3, 10],
       backgroundColor: "rgba(255,140,0,0.4)"
+    }, {\
+//STEP 4 -- Adding third blue bar for totalConfirmedPer100000
+      label: 'bananas',
+      data: [2, 29, 5, 5, 2, 3, 10],
+      backgroundColor: "rgba(255,255,0,0.4)"
     }]
   },
   options: {
@@ -101,10 +106,18 @@ function loadContent() {
         = "rgba(100,100,100,0.4)"; // gray
       chartData.data.datasets[1].backgroundColor 
         = "rgba(255,0,0,0.4)"; // red
+      //adds the blue bar which will show the totalConfirmedPer100000
+      chartData.data.datasets[2].backgroundColor 
+        = "rgba(0,0,255,0.4)"; // blue
       chartData.data.datasets[0].label  
-        = 'new cases';
+        = 'Total Cases'; //changed from new cases to Total Cases
       chartData.data.datasets[1].label  
-        = 'new deaths';
+        = 'Total Deaths'; //changed from new deaths to Total Deaths
+      chartData.data.labels  
+        = newConfirmedOver1000.map( (x) => x.Slug );
+      //Adds a label for totalConfirmedPer100000
+      chartData.data.datasets[2].label  
+        = 'Total Cases Per 100,000'; 
       chartData.data.labels  
         = newConfirmedOver1000.map( (x) => x.Slug );
       chartData.data.datasets[0].data  
@@ -113,9 +126,15 @@ function loadContent() {
       chartData.data.datasets[1].data  
         = newConfirmedOver1000.map( 
           (x) => x.NewDeaths );
+      //adding dataset for totalConfirmedPer100000
+      chartData.data.datasets[2].data  
+        = newConfirmedOver1000.map( 
+          (x) => x.TotalConfirmedPer100000 );
+	    
 	//STEP 1 Use day.js to put the date in the title
       chartData.options.title.text 
         = "Covid 19 Hotspots (" + 
+	//STEP 1 -- Use Day.js (.format() method)
         dayjs().format("YYYY-MM-DD") + ")" ;
       myChart = new Chart(ctx, chartData); 
 
