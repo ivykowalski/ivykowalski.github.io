@@ -81,6 +81,10 @@ var chartData = {
 // https://www.w3schools.com/js/js_ajax_intro.asp
 
 function loadContent() {
+  //if it's been over 24 hours since the last AJAX call (meaning the local storage date would be greater than 84600000 milliseconds different from 
+  //the current day/time (using now which holds the day using dayjs) or if there hasn't been an AJAX call (meaning that date doesn't have a value in local storage))
+  if(!localStorage.getItem("date") || dayjs().valueOf() - localStorage.getItem("date") > 86400000 ) {
+
   xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 
@@ -134,7 +138,6 @@ function loadContent() {
         = newConfirmedOver1000.map( 
           (x) => x.TotalConfirmedPer100000 );
 	    
-	//STEP 1 Use day.js to put the date in the title
       chartData.options.title.text 
         = "Covid 19 Hotspots (" + 
 	//STEP 1 -- Use Day.js (.format() method)
@@ -142,12 +145,72 @@ function loadContent() {
       myChart = new Chart(ctx, chartData); 
 
     } // end if
+	  
+    else {//if not, pulls the data from local storage
+    //gets json from local storage 
+    covidJson = localStorage.getItem("json");
+    covidJsObj = JSON.parse(covidJson);
     
+    newConfirmedOver1000 = [];
+	    
+	for (let c of covidJsObj.Countries) {
+        //ensures only bars for countries with at least 50,000 deaths are displayed
+	if (c.TotalDeaths > 50000) {
+          newConfirmedOver1000.push({ 
+            "Slug": c.Slug, 
+            "NewConfirmed": c.NewConfirmed, 
+            "NewDeaths": c.NewDeaths,
+	    //added the objects Population, TotalConfirmed, TotalDeaths, and TotalConfirmedPer100000
+            "Population" : populations[c.Slug],
+	    "TotalConfirmed": c.TotalConfirmed, 
+            "TotalDeaths": c.TotalDeaths,
+	    "TotalConfirmedPer100000": 100000 * c.TotalConfirmed / populations[c.Slug],
+          });
+        }
+      }
+      //Use .orderBy to sort data so graph shows country with highest totalConfirmedPer100000 first
+	newConfirmedOver1000 = _.orderBy(newConfirmedOver1000, 'TotalConfirmedPer100000', 'desc');
+      
+      chartData.data.datasets[0].backgroundColor 
+        = "rgba(100,100,100,0.4)"; // gray
+      chartData.data.datasets[1].backgroundColor 
+        = "rgba(255,0,0,0.4)"; // red
+      //adds the blue bar which will show the totalConfirmedPer100000
+      chartData.data.datasets[2].backgroundColor 
+        = "rgba(0,0,255,0.4)"; // blue
+      chartData.data.datasets[0].label  
+        = 'Total Cases'; //changed from new cases to Total Cases
+      chartData.data.datasets[1].label  
+        = 'Total Deaths'; //changed from new deaths to Total Deaths
+      //Adds a label for totalConfirmedPer100000
+      chartData.data.datasets[2].label  
+        = 'Total Cases Per 100,000'; 
+      chartData.data.labels  
+        = newConfirmedOver1000.map( (x) => x.Slug );
+      chartData.data.datasets[0].data  
+        = newConfirmedOver1000.map( 
+          (x) => x.NewConfirmed );
+      chartData.data.datasets[1].data  
+        = newConfirmedOver1000.map( 
+          (x) => x.NewDeaths );
+      //adding dataset for totalConfirmedPer100000
+      chartData.data.datasets[2].data  
+        = newConfirmedOver1000.map( 
+          (x) => x.TotalConfirmedPer100000 );
+	 
+      chartData.options.title.text 
+        = "Covid 19 Hotspots (" + 
+        dayjs().format("YYYY-MM-DD") + ")" ;
+      myChart = new Chart(ctx, chartData); 
+    
+    //signals to the console it pulled from local storage
+    console.log('Used recent localStorage data');
+  }//end of else 
   }; // end xhttp.onreadystatechange = function()
   
   xhttp.open("GET", URL, true);
   xhttp.send();
-  
+}//end of if (!localStorage.getItem("date") || now.valueOf() - localStorage.getItem("date") > 86400000 )
 } // end function loadContent() 
 
 // data from: https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population
