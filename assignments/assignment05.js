@@ -85,7 +85,8 @@ function loadContent() {
       covidJsObj = JSON.parse(covidJson);
       newConfirmedOver1000 = [];
       
-	    for (let c of covidJsObj.Countries) {
+	    for (let c of covidJsObj.Countries)
+        //ensures only bars for countries with at least 50,000 deaths are displayed
         if (c.NewConfirmed > 10000) {
           newConfirmedOver1000.push({ 
             "Slug": c.Slug, 
