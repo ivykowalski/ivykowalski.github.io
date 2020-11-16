@@ -94,6 +94,7 @@ function loadContent() {
           });
         }
       }
+      //STEP 3 -- Use .orderBy to sort data so graph shows country with highest totalConfirmedPer100000 first
       newConfirmedOver1000 = _.orderBy(newConfirmedOver1000, "NewDeaths", "desc");
 
       chartData.data.datasets[0].backgroundColor 
