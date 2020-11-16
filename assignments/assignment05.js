@@ -48,7 +48,12 @@ var chartData = {
           // logarithmic scale ignores maxTicksLimit
           maxTicksLimit: 11,
           callback: function(label, index, labels) {
-            return (   label/1000 > 9 
+            //STEP 8 -- adjusts y axis to only show powers of 10 
+            return (   label/1000 > 999999 
+                    || label/1000 == 10000 
+                    || label/1000 == 1000 
+                    || label/1000 == 100 
+                    || label/1000 == 10 
                     || label/1000 == 1 
                     || label/1000 == 0.1 
                     || label/1000 == 0.01) 
