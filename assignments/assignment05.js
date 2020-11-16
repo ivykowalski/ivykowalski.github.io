@@ -119,8 +119,6 @@ function loadContent() {
         = 'Total Cases'; //changed from new cases to Total Cases
       chartData.data.datasets[1].label  
         = 'Total Deaths'; //changed from new deaths to Total Deaths
-      chartData.data.labels  
-        = newConfirmedOver1000.map( (x) => x.Slug );
       //Adds a label for totalConfirmedPer100000
       chartData.data.datasets[2].label  
         = 'Total Cases Per 100,000'; 
