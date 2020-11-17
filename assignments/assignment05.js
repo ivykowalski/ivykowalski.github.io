@@ -96,7 +96,7 @@ function loadContent() {
 
                 for (let c of covidJsObj.Countries)
                     //ensures only bars for countries with at least 50,000 deaths are displayed
-                    if (c.NewConfirmed > 10000) {
+                    if (c.NewConfirmed > 50000) {
                         newConfirmedOver1000.push({
                             "Slug": c.Slug,
                             "NewConfirmed": c.NewConfirmed,
