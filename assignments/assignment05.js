@@ -121,7 +121,7 @@ function loadContent() {
                 chartData.data.datasets[2].label = 'Total Cases Per 100,000';
                 chartData.data.labels = newConfirmedOver1000.map((x) => x.Slug);
                 chartData.data.datasets[0].data = newConfirmedOver1000.map(
-                    (x) => x.TotalCases);
+                    (x) => x.TotalConfirmed);
                 chartData.data.datasets[1].data = newConfirmedOver1000.map(
                     (x) => x.TotalDeaths);
                 //adding dataset for totalConfirmedPer100000
@@ -177,7 +177,7 @@ function loadContent() {
         chartData.data.datasets[2].label = 'Total Cases Per 100,000';
         chartData.data.labels = newConfirmedOver1000.map((x) => x.Slug);
         chartData.data.datasets[0].data = newConfirmedOver1000.map(
-            (x) => x.TotalCases);
+            (x) => x.TotalConfirmed);
         chartData.data.datasets[1].data = newConfirmedOver1000.map(
             (x) => x.TotalDeaths);
         //adding dataset for totalConfirmedPer100000
