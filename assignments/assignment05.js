@@ -145,6 +145,14 @@ function loadContent() {
       myChart = new Chart(ctx, chartData); 
 
     } // end if
+      }; // end xhttp.onreadystatechange = function()
+	//STEP 5 
+    //signals to console an ajax call was made
+  console.log('AJAX call made');
+  //mkaes a call to the covid 19 api (URL) 
+  xhttp.open("GET", URL, true);
+  xhttp.send();
+}//end of if (!localStorage.getItem("date") || now.valueOf() - localStorage.getItem("date") > 86400000 )
 	  
     else {//if not, pulls the data from local storage
     //gets json from local storage 
@@ -202,15 +210,11 @@ function loadContent() {
         = "Covid 19 Hotspots (" + 
         dayjs().format("YYYY-MM-DD") + ")" ;
       myChart = new Chart(ctx, chartData); 
-    
+    //STEP 5 
     //signals to the console it pulled from local storage
     console.log('Used recent localStorage data');
   }//end of else 
-  }; // end xhttp.onreadystatechange = function()
-  
-  xhttp.open("GET", URL, true);
-  xhttp.send();
-}//end of if (!localStorage.getItem("date") || now.valueOf() - localStorage.getItem("date") > 86400000 )
+
 } // end function loadContent() 
 
 // data from: https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population
