@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html>
-<body>
- <!-- STEP 7 Put chart in bootstrap DIV -->
- <!-- links bootstrap so chart and paragraph can be two reactive column divs -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-   <div class="container-fluid">
-      <div class="row">
-         <!--bootstrap column div puts chart on the left -->
-         <div class="col-12 col-md-9">
-            <canvas id="myChart"></canvas>
-         </div>
-         <!--button to load chart -->
-         <h2>Covid 19 Hotspots Chart</h2>
-         <button type="button" onclick="loadContent()">Load Covid-19 Content</button>
-         <!-- bootstrap column div puts paragraph to the right of chart -->
-         <div class="col-12 col-md-3">
-            <h3>Covid-19 </h3>
-            <p>"The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2), first identified in December 2019 in Wuhan, China." (<a href="https://en.wikipedia.org/wiki/COVID-19_pandemic">Wikipedia</a>)</p>
+   <body>
+      <!-- STEP 7 Put chart in bootstrap DIV -->
+      <!-- links bootstrap so chart and paragraph can be two reactive column divs -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      <div class="container-fluid">
+         <div class="row">
+            <!--bootstrap column div puts chart on the left -->
+            <div class="col-12 col-md-9">
+               <canvas id="myChart"></canvas>
+            </div>
+            <!--button to load chart -->
+            <h2>Covid 19 Hotspots Chart</h2>
+            <button type="button" onclick="loadContent()">Load Covid-19 Content</button>
+            <!-- bootstrap column div puts paragraph to the right of chart -->
+            <div class="col-12 col-md-3">
+               <h3>Covid-19 </h3>
+               <p>"The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2), first identified in December 2019 in Wuhan, China." (<a href="https://en.wikipedia.org/wiki/COVID-19_pandemic">Wikipedia</a>)</p>
+            </div>
          </div>
       </div>
-   </div>
-  
-<!-- ChartJS: https://www.chartjs.org/ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-
-<!-- Lodash: https://lodash.com/ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
-
-<!-- Day.js: https://day.js.org/docs/en/installation/browser -->
-<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
-<script>
-  dayjs().format();
-  console.log(dayjs().format("YYYY-MM-DD"));
-</script>
-<!-- connects ajax -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!-- connects js -->
-<script src="https://ivykowalski.github.io/assignments/assignment05.js"></script>
-</body>
+      <!-- ChartJS: https://www.chartjs.org/ -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+      <!-- Lodash: https://lodash.com/ -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
+      <!-- Day.js: https://day.js.org/docs/en/installation/browser -->
+      <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+      <script>
+         dayjs().format();
+         console.log(dayjs().format("YYYY-MM-DD"));
+      </script>
+      <!-- connects ajax -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <!-- connects js -->
+      <script src="https://ivykowalski.github.io/assignments/assignment05.js"></script>
+   </body>
 </html>
