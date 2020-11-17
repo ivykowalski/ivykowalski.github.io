@@ -109,7 +109,7 @@ function loadContent() {
                         });
                     }
                 //STEP 3 -- Use .orderBy to sort data so graph shows country with highest totalConfirmedPer100000 first
-                newConfirmedOver1000 = _.orderBy(newConfirmedOver1000, "NewDeaths", "desc");
+                newConfirmedOver1000 = _.orderBy(newConfirmedOver1000, 'TotalConfirmedPer100000', "desc");
 
                 chartData.data.datasets[0].backgroundColor = "rgba(100,100,100,0.4)"; // gray
                 chartData.data.datasets[1].backgroundColor = "rgba(255,0,0,0.4)"; // red
