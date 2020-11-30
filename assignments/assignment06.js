@@ -9,75 +9,81 @@ var loans = [
   { loan_year: 2024, loan_amount: 10000.00, loan_int_rate: 0.0453 }
 ]; 
 
-// --- function: loadDoc() ---
-//STEP 2 add jQuery
-//instead of function loadDoc() {
-  $(document).ready(function(){
-    
-  // pre-fill defaults for first loan year
-  var defaultYear = loans[0].loan_year;
-    //change document.getElementById to jQuery using $
-    //.val(defaultYear++) instead of .value = defaultYear++
-  $("loan_year0" + 1).val(defaultYear++);
-  var defaultLoanAmount = loans[0].loan_amount;
-    //switch to jQuery as explained above
-  $("loan_amt0" + 1).val(defaultLoanAmount.toFixed(2));
-  var defaultInterestRate = loans[0].loan_int_rate;
-    //switch to jQuery as explained above
-  $("loan_int0" + 1).val(defaultInterestRate);
-  var loanWithInterest = loans[0].loan_amount * (1 + loans[0].loan_int_rate);
-    //instead of .innerHTML use .text and use function toMoney
-  $("loan_bal0" + 1).text(toMoney(loanWithInterest));
-  
-  // pre-fill defaults for other loan years
-  for(var i=2; i<6; i++) {
-    //convert to jQuery as explained above
-    $("loan_year0" + i).val(defaultYear++);
-    //use attr to disable
-    $("loan_year0" + i).attr("disabled", true);
-    //use css to change background color
-    $("loan_year0" + i).css("backgroundColor": "gray");
-    $("loan_year0" + i).css("color": "white");
-    $("loan_amt0" + i).val(defaultLoanAmount.toFixed(2));
-    $("loan_int0" + i).val(defaultInterestRate);
-    $("loan_int0" + i).attr("disabled", true);
-    $("loan_int0" + i).css("backgroundColor": "gray");
-    $("loan_int0" + i).css("color": "white");
-    //set all values with loan_int0 id to gray background and color white using jQuery $
-   loanWithInterest = (loanWithInterest + defaultLoanAmount) * (1 + defaultInterestRate);
-   $("loan_bal0" + i).text(toMoney(loanWithInterest));
-    } // end: "for" loop
-  
-  // all input fields: select contents on focus
-  $("input[type=text]").focus(function() {
-    $(this).select();
-    $(this).css("background-color", "yellow");
-  }); 
-  $("input[type=text]").blur(function() {
-    $(this).css("background-color", "white");
-  });
-  
-  // set focus to first year: messes up codepen
-  // $("#loan_year01").focus();
-  $("#loan_year01").blur( function() {
-    updateLoansArray();
-  });
-  
-}); // end: function loadDoc(), and thus end of jQuery
 
-//functions necessary for completion
-function toComma(value) {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-//use regular expression to make value look like money value
-function toMoney(value) =>
-    return `\$${toComma(value.toFixed(2))}`;
-}
-//STEP 4 save to local storage
- let savedata = () => { 
-         localStorage.setItem(`as06`, JSON.stringify(loans));
- }
- 
+//STEP 2 add jQuery
+//instead of function loadDoc()
+
+     $(document).ready(function() {
+
+         // pre-fill defaults for first loan year
+         var defaultYear = loans[0].loan_year;
+   //change document.getElementById to jQuery using $
+   //.val(defaultYear++) instead of .value = defaultYear++
+         $("#loan_year0" + 1).val(defaultYear++); 
+         var defaultLoanAmount = loans[0].loan_amount;
+       //switch to jQuery as explained above
+         $("#loan_amt0" + 1).val(defaultLoanAmount.toFixed(2));
+         var defaultInterestRate = loans[0].loan_int_rate;
+       //switch to jQuery as explained above
+         $("#loan_int0" + 1).val(defaultInterestRate);
+         var loanWithInterest = loans[0].loan_amount * (1 + loans[0].loan_int_rate);
+       //instead of .innerHTML use .text and use function toMoney
+         $("#loan_bal0" + 1).text(toMoney(loanWithInterest));
+
+         // pre-fill defaults for other loan years
+         for (let i = 2; i < 6; i++) {
+           //convert to jQuery as explained above
+             $(`#loan_year0${i}`).val(defaultYear++);
+             //use attr to disable
+             $(`#loan_year0${i}`).attr("disabled", "true");
+           //use css to change background color
+             $(`#loan_year0${i}`).css({
+                 "backgroundColor": "grey",
+                 "color": "white"
+             }); 
+           //apply $10,000 value to the full loan_amt0 id
+             $(`#loan_amt0${i}`).val(defaultLoanAmount.toFixed(2)); 
+           //apply default interest rate along column and anything with the id of loan_int0
+             $(`#loan_int0${i}`).val(defaultInterestRate); 
+            //disable ids with the loan_int0 value except for the first one
+             $(`#loan_int0${i}`).attr("disabled", "true");
+             $(`#loan_int0${i}`).css({
+                 "backgroundColor": "grey",
+                 "color": "white"
+             }); 
+             loanWithInterest = (loanWithInterest + defaultLoanAmount) * (1 + defaultInterestRate);
+           //to jQuery and uses function toMoney
+             $("#loan_bal0" + i).text(toMoney(loanWithInterest)); 
+         } // end: "for" loop
+
+       // all input fields: select contents on focus
+         $("input[type=text]").focus(function() {
+             $(this).select();
+             $(this).css("background-color", "yellow");
+         });
+         $("input[type=text]").blur(function() {
+             $(this).css("background-color", "white");
+             updateLoansArray();
+         });
+
+         // set focus to first year: messes up codepen
+         // $("#loan_year01").focus();
+
+     }); // end: function loadDoc()
+
+   //functions necessary for program completion
+
+     function toComma(value) {
+         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     }
+
+     let toMoney = (value) => {
+         return `\$${toComma(value.toFixed(2))}`;
+     }
+     let savedata = () => { //begin savedata method
+         localStorage.setItem(`as06`, JSON.stringify(loans)); //save all necessary data to be in local storage
+     }
+
      let loaddata = () => { //begin loadata method
          if (localStorage.getItem(`as06`) != null) { //if there is on-device data
              loans = JSON.parse(localStorage.getItem(`as06`)); //apply values from the saved data to loans
