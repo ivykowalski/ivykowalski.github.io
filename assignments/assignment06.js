@@ -30,7 +30,7 @@ var loans = [
   $("loan_bal0" + 1).text(toMoney(loanWithInterest));
   
   // pre-fill defaults for other loan years
-  for(let i=2; i<6; i++) {
+  for(var i=2; i<6; i++) {
     //convert to jQuery as explained above
     $("loan_year0" + i).val(defaultYear++);
     //use attr to disable
