@@ -186,17 +186,17 @@ function updateLoansArray() {
 let updateForm = () => {
     //initialize loanwithinterest
     loanWithInterest = 0;
-    //create and initialize the totalLoan value
+    //initialize the totalLoan value
     let totalLoan = 0;
-    //loop for entire field
+    //loop through entire field
     for (i = 1; i < 6; i++) {
-        //change the value of the entirety of the loan_year field based on values stored in loans
+        //change the value of the loan_year field based on values stored in loans
         $(`#loan_year0${i}`).val(loans[i - 1].loan_year);
-        //create and initialize loaned variable
+        //initialize loaned variable
         let loaned = loans[i - 1].loan_amount;
         //pull the loaned amount
         $(`#loan_amt0${i}`).val(loaned);
-        //accumulate total amount loaned
+        //sum up total amount loaned
         totalLoan += parseFloat(loaned);
         //pull integer value
         $(`#loan_int0${i}`).val(loans[i - 1].loan_int_rate);
@@ -206,13 +206,12 @@ let updateForm = () => {
         $("#loan_bal0" + i).text(toMoney(loanWithInterest));
     }
     let totalamountowed = loanWithInterest - totalLoan;
-    //apply value for total interest collected over college career
+    //apply value for total interest collected
     $(`#loan_int_accrued`).text(toMoney(totalamountowed));
 }
 
-//create and initialize app using angular inside the appdata field
+//initialize app using angular inside the appdata field
 var app = angular.module('appdata', []);
-//in the controller field of the html and everything within the alldata field
 app.controller('alldata', function($scope) {
     //find the payments h2
     $scope.payments = [];
@@ -222,11 +221,11 @@ app.controller('alldata', function($scope) {
         updateForm();
         //initialize an endprice value using loanwithinterest
         let endprice = loanWithInterest;
-        //initialize an interestrate value based on loan in rate
+        //initialize an interestrate value
         let interestrate = loans[0].loan_int_rate;
-        //create an r value to represnt interest over months instead of years
+        //r value to represnt interest over months instead of years
         let r = interestrate / 12;
-        //create an n value for the purpose of not including one month
+        //n value to disinclude a month
         let n = 11;
         //calculate payment
         let pay = 12 * (endprice / ((((1 + r) ** (n * 12)) - 1) / (r * (1 + r) ** (n * 12))));
@@ -234,15 +233,15 @@ app.controller('alldata', function($scope) {
         for (let i = 0; i < 10; i++) {
             //decrease endprice
             endprice -= pay
-            //create and initialize int to be equal to the montly interest rate * end price 
+            //initialize int to be equal to the montly interest rate * end price 
             let interested = endprice * (interestrate);
             //adjust payments values
             $scope.payments[i] = {
-                //go to year the next
+                //go to next year
                 "year": loans[4].loan_year + i + 1,
                 //apply what is payed
                 "payed": toMoney(pay),
-                //apply what the amount interested was
+                //apply amount of interest
                 "interestamount": toMoney(interested),
                 //apply what the end price looks like
                 "endbalance": toMoney(endprice += interested)
