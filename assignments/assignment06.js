@@ -209,7 +209,7 @@ let updateForm = () => {
     //apply value for total interest collected
     $(`#loan_int_accrued`).text(toMoney(totalamountowed));
 }
-
+//STEP 5 add angular to populate payments table form
 //initialize app using angular inside the appdata field
 var app = angular.module('appdata', []);
 app.controller('alldata', function($scope) {
