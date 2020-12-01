@@ -73,112 +73,122 @@ var loans = [
 
    //functions necessary for program completion
 
+   function toComma(value) {
+         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     }
+
+     let toMoney = (value) => {
+         return `\$${toComma(value.toFixed(2))}`;
+     }
+     let savedata = () => { //begin savedata method
+         localStorage.setItem(`as06`, JSON.stringify(loans)); //save all necessary data to be in local storage
+     }
+
+     let loaddata = () => { //begin loadata method
+         if (localStorage.getItem(`as06`) != null) { //if there is on-device data
+             loans = JSON.parse(localStorage.getItem(`as06`)); //apply values from the saved data to loans
+             updateForm(); //apply values to what is seen
+         } else { //if there is no on device data
+             alert("Error: no saved values"); //alert user to lack of on device data
+         }
+     }
+
+     function updateLoansArray() {
+
+         //the following values will controll the ability for a value to be entered.
+         let yearcontroller = /^(19|20)\d{2}$/; //checks if the value is a number and within 1899 and 2099
+         let amountcontroller = /^([1-9][0-9]*)+(.[0-9]{1,2})?$/; //checks if the value is a number and above 1 whole dollar
+         let integercontroller = /^(0|)+(.[0-9]{1,5})?$/; //checks to ensure the value is a number is below 1.0
+         let tracker = true; //used to see if there is anything wrong with the constraints listed above
+
+         if (!yearcontroller.test($(`#loan_year01`).val())) { //if yearcontroller does not pass
+             tracker = false; //set to false
+             alert("error in year field"); //prompt user with incorrect value
+         }
+
+         for (i = 1; i < 6; i++) { //loop through full amount field
+             if (!amountcontroller.test($(`#loan_amt0${i}`).val())) { //if amountcontrolelr is not passed
+                 tracker = false; //set to false
+                 alert("error in amount field in box: " + i); //prompt user with error in boxes
+             }
+         }
+
+         if (!integercontroller.test($(`#loan_int01`).val())) { //if integercontroller is not passed
+             tracker = false; //set to false
+             alert("error in interest rate field"); //prompt user with error in interest rate field.
+         }
+
+         if (tracker) { //if all previous operations pass with flying colors execute follwing action
+             loans[0].loan_year = parseInt($("#loan_year01").val()); //pass the year value from the input box
+             for (var i = 1; i < 5; i++) { //loop for the rest ofthe input field
+                 loans[i].loan_year = loans[0].loan_year + i; //apply value to loans adding i for proper input
+             }
+
+             for (i = 1; i < 6; i++) { //loop for entirety of amount field to save values
+                 let amount = parseFloat($(`#loan_amt0${i}`).val()).toFixed(2); //pass the float value as it is a decimal value technically
+                 loans[i - 1].loan_amount = amount; //save value to loans array.
+             }
+
+             let interestrate = parseFloat($("#loan_int01").val()); //generate interest rate value
+             for (i = 0; i < 5; i++) { //loop for interest rate field
+                 loans[i].loan_int_rate = interestrate; //save interest rate to loans
+             }
+
+
+
+             updateForm(); //run updateform to apply values
+
+         }
+
+     }
+
      let updateForm = () => {
-    loanWithInterest = 0;
-    let totalAmt = 0;
-    for(i=1;i<6;i++){
-      $(`#loan_year0${i}`).val(loans[i-1].loan_year);
-      let amt = loans[i-1].loan_amount
-      $(`#loan_amt0${i}`).val(amt);
-      totalAmt+= parseFloat(amt);
-      $(`#loan_int0${i}`).val(loans[i-1].loan_int_rate);
-      loanWithInterest = (loanWithInterest + parseFloat(amt)) * (1 + loans[0].loan_int_rate);
+         loanWithInterest = 0; //initialize loanwithinterest
+         let totalloan = 0; //create and initialize the totalloan value
+         for (i = 1; i < 6; i++) { //loop for entire field
+             $(`#loan_year0${i}`).val(loans[i - 1].loan_year); //change the value of the entirety of the loan_year field based on values stored in loans
+             let loaned = loans[i - 1].loan_amount; //create and initialize loaned variable
+             $(`#loan_amt0${i}`).val(loaned); //pull the loaned amount
+             totalloan += parseFloat(loaned); //accumulate total amount loaned
+             $(`#loan_int0${i}`).val(loans[i - 1].loan_int_rate); //pull integer value
+             loanWithInterest = (loanWithInterest + parseFloat(loaned)) * (1 + loans[0].loan_int_rate); //calculate the total loaned value with interest
+             $("#loan_bal0" + i).text(toMoney(loanWithInterest)); //apply value of loanwithinterest
+         }
+         let totalamountowed = loanWithInterest - totalloan;
+         $(`#loan_int_accrued`).text(toMoney(totalamountowed)); //apply value for total interest collected over college career  
+     }
 
-      $("#loan_bal0" + i).text(toMoney(loanWithInterest));
-    }
-    int = loanWithInterest-totalAmt;
-    $(`#loan_int_accrued`).text(toMoney(int));
-  }
-  
-  function toComma(value) {
-      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
 
-  let toMoney = (value) =>{
-    return `\$${toComma(value.toFixed(2))}`;
-  }
-  //STEP 3 Add regular expressions to validate input fields
-  function updateLoansArray() {
-    let valid = true;
-    let yearP = /^(19|20)\d{2}$/;
-    let amtP = /^([1-9][0-9]*)+(.[0-9]{1,2})?$/;
-    let intP = /^(0|)+(.[0-9]{1,5})?$/;
+     var app = angular.module('appdata', []); //create and initialize app using angular inside the appdata field
 
-    if(!yearP.test($(`#loan_year01`).val())){
-      valid = false;
-      $(`#loan_year01`).css("background-color", "red");
-    }
-    
-    for (i = 1; i < 6; i++) {
-      if(!amtP.test($(`#loan_amt0${i}`).val())){
-        valid = false;
-        $(`#loan_amt0${i}`).css("background-color", "red");
-      } 
-    }
+     app.controller('alldata', function($scope) { //in the controller field of the html and everything within the alldata field
+         $scope.payments = []; //find the payments h2
 
-    if(!intP.test($(`#loan_int01`).val())){
-      valid = false;
-      $(`#loan_int01`).css("background-color", "red");
-    }
+         $scope.populate = function() { //begin populate function
 
-    if(valid){
-      loans[0].loan_year = parseInt($("#loan_year01").val());
-      for(var i=1; i<5; i++) {
-        loans[i].loan_year = loans[0].loan_year + i;
-      }
-      for(i = 1; i<6; i++){
-        let amt = parseFloat($(`#loan_amt0${i}`).val()).toFixed(2);
-        loans[i-1].loan_amount = amt;
-      }
-      let rate = parseFloat($("#loan_int01").val());
-      for(i=0; i<5; i++){
-        loans[i].loan_int_rate = rate;
-      }
+             updateForm(); //update what is visible
 
-      updateForm();
-    }
-  }
-//STEP 4 Store loans array data using localStorage
- let saveForm = () => {
-   localStorage.setItem(`as06`, JSON.stringify(loans));
- }
+             let endprice = loanWithInterest; //initialize an endprice value using loanwithinterest
+             let interestrate = loans[0].loan_int_rate; //initialize an interestrate value based on loan in rate
+             let r = interestrate / 12; //create an r value to represnt interest over months instead of years
+             let n = 11; //create an n value for the purpose of not including one month
 
- let loadForm = () => {
-  if(localStorage.getItem(`as06`) != null){
-     loans = JSON.parse(localStorage.getItem(`as06`));
-     updateForm();
-  } else {
-     alert(`Error: no saved values`);
-  }
- }
-//STEP 5 use angular to populate payments table
-var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope) {
-  $scope.payments =[];
-  $scope.populate = function () {
-    updateForm();
-    let total = loanWithInterest;
-    let iRate = loans[0].loan_int_rate;
-    let r = iRate / 12;
-    let n = 11;
-    //loan payment formula
-    //https://www.thebalance.com/loan-payment-calculations-315564
-    let pay = 12 * (total / ((((1+r)**(n*12))-1)/(r *(1+r)**(n*12))));
-    for (let i = 0; i < 10; i++) {
-      total -= pay 
-      let int = total * (iRate); 
-      $scope.payments[i]={
-        "year":loans[4].loan_year + i + 1,
-        "payment": toMoney(pay), 
-        "amt": toMoney(int),
-        "ye": toMoney(total += int)
-      }
-    }
-    $scope.payments[10] = {
-      "year":loans[4].loan_year + 11,
-      "payment": toMoney(total),
-      "amt": toMoney(0),
-      "ye":toMoney(0)
-    }
-  }
-});
+             let pay = 12 * (endprice / ((((1 + r) ** (n * 12)) - 1) / (r * (1 + r) ** (n * 12)))); //calculate payment
+             for (let i = 0; i < 10; i++) { //loop 10 times
+                 endprice -= pay //decrease endprice
+                 let interested = endprice * (interestrate); //create and initialize int to be equal to the montly interest rate * end price
+                 $scope.payments[i] = { //adjust payments values
+                     "year": loans[4].loan_year + i + 1, //go to year the next
+                     "payed": toMoney(pay), //apply what is payed
+                     "interestamount": toMoney(interested), //apply what the amount interested was
+                     "endbalance": toMoney(endprice += interested) //apply what the end price looks like
+                 }
+             }
+             $scope.payments[10] = { //at position 10 aply the following values
+                 "year": loans[4].loan_year + 11, //year will equal the year of interest plus 11
+                 "payed": toMoney(endprice), //the amount payed will be equivelant to the ending price
+                 "interestamount": toMoney(0), //the amount interested should be zero as there is nothing left to increase
+                 "endbalance": toMoney(0) //the balance of what is owed will be zero as there is nothing left to interest there either.
+             }
+         }
+     });
