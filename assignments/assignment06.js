@@ -73,7 +73,7 @@ var loans = [
 
    //functions necessary for program completion
 
-   function toComma(value) {
+    function toComma(value) {
          return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
      }
 
@@ -103,19 +103,19 @@ var loans = [
 
          if (!yearcontroller.test($(`#loan_year01`).val())) { //if yearcontroller does not pass
              tracker = false; //set to false
-             $(`#loan_year01`).css("background-color", "red");
+             alert("error in year field"); //prompt user with incorrect value
          }
 
          for (i = 1; i < 6; i++) { //loop through full amount field
              if (!amountcontroller.test($(`#loan_amt0${i}`).val())) { //if amountcontrolelr is not passed
                  tracker = false; //set to false
-                 $(`#loan_amt0${i}`).css("background-color", "red");
+                 alert("error in amount field in box: " + i); //prompt user with error in boxes
              }
          }
 
          if (!integercontroller.test($(`#loan_int01`).val())) { //if integercontroller is not passed
              tracker = false; //set to false
-             $(`#loan_int01`).css("background-color", "red");
+             alert("error in interest rate field"); //prompt user with error in interest rate field.
          }
 
          if (tracker) { //if all previous operations pass with flying colors execute follwing action
