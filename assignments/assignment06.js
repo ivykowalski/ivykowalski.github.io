@@ -103,19 +103,19 @@ var loans = [
 
          if (!yearcontroller.test($(`#loan_year01`).val())) { //if yearcontroller does not pass
              tracker = false; //set to false
-             alert("error in year field"); //prompt user with incorrect value
+             $(`#loan_year01`).css("background-color", "red");
          }
 
          for (i = 1; i < 6; i++) { //loop through full amount field
              if (!amountcontroller.test($(`#loan_amt0${i}`).val())) { //if amountcontrolelr is not passed
                  tracker = false; //set to false
-                 alert("error in amount field in box: " + i); //prompt user with error in boxes
+                 $(`#loan_amt0${i}`).css("background-color", "red");
              }
          }
 
          if (!integercontroller.test($(`#loan_int01`).val())) { //if integercontroller is not passed
              tracker = false; //set to false
-             alert("error in interest rate field"); //prompt user with error in interest rate field.
+             $(`#loan_int01`).css("background-color", "red");
          }
 
          if (tracker) { //if all previous operations pass with flying colors execute follwing action
